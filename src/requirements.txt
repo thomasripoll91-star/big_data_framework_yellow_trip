@@ -1,4 +1,0 @@
-pyspark
-jupyterlab
-pandas
-pyarrow
