@@ -15,7 +15,7 @@ def setup_logger():
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     
     # Handler pour écrire dans un fichier texte
-    file_handler = logging.FileHandler('feeder_execution.txt', mode='a')
+    file_handler = logging.FileHandler('logs/feeder_execution.txt', mode='a')
     file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
     
@@ -108,9 +108,25 @@ def run_ingestion():
     try:
         logger.info("Création du dictionnaire métier...")
         dictionary_data = [
-            ("payment_type", 1, "Credit card"), ("payment_type", 2, "Cash"),
-            ("RatecodeID", 1, "Standard rate"), ("RatecodeID", 2, "JFK")
-            # J'ai raccourci la liste ici pour la lisibilité, tu peux remettre tous les champs
+            # Types de paiement (payment_type)
+            ("payment_type", 1, "Credit card"),
+            ("payment_type", 2, "Cash"),
+            ("payment_type", 3, "No charge"),
+            ("payment_type", 4, "Dispute"),
+            ("payment_type", 5, "Unknown"),
+            ("payment_type", 6, "Voided trip"),
+            
+            # Codes tarifaires (RatecodeID)
+            ("RatecodeID", 1, "Standard rate"),
+            ("RatecodeID", 2, "JFK"),
+            ("RatecodeID", 3, "Newark"),
+            ("RatecodeID", 4, "Nassau or Westchester"),
+            ("RatecodeID", 5, "Negotiated fare"),
+            ("RatecodeID", 6, "Group ride"),
+            
+            # Fournisseurs de terminaux (VendorID)
+            ("VendorID", 1, "Creative Mobile Technologies, LLC"),
+            ("VendorID", 2, "VeriFone Inc.")
         ]
         schema = StructType([
             StructField("category", StringType(), False),

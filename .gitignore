@@ -1,5 +1,5 @@
 **/py_cache/**
 **/feeder_execution.txt
 **/bdf/**
-data/raw/**
-data/landing/**
+logs/**
+data/bronze/**

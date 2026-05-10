@@ -96,7 +96,10 @@ Les scripts :
 #### Exemple : ingestion des données
 
 ```bash
-spark-submit scripts/feeder.py dataset/yellow_tripdata_2025-01.parquet raw/
+spark-submit src/silver/processor.py \
+    --input_raw_trips data/raw/yellow_tripdata \
+    --input_raw_zones data/raw/taxi_zones \
+    --output_dir data/silver
 ```
 
 
