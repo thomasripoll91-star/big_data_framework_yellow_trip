@@ -1,0 +1,16 @@
+- En exécutant notre script verif.py on confirme qu'on a réussi à metre en place l'architecture médaillon jusqu'là la couche silver. La jointure entre la table des trajets (trips) et la table de référence des zones (zones) est opérationnelle.
+
+Les colonnes Borough et Zone sont correctement remplies (ex: Manhattan, Queens, Brooklyn)et maintenant on peut faire uen analyse géographique plus simple qu'avec de simple valeurs numériques.
+
+
+
+-Par contre on peut voir qu'il y a des valeurs "null" dans la colonne payment_method. On a analysé le truc et c'est pas une erreur de notre code mais c'est plutot la réalité des données : il y a des valeurs manquantes :
+l'hypothèse est que certains codes (comme 0, 5 ou 6) ne sont pas dans le dictionnaire standard ou alors simplement que le terminal du taxi na pas enregistré l'info pendant la course. On a pris la décision technique de garder ces lignes dans la couche Silver. C'est plus logique parce qu'un trajet, même si on sait pas comment il a été payé, a quand même été fait et l'argent a été encaissé. Si on les supprimait, on allait sous-estimer le trafic total et le chiffre d'affaires des taxis. Pour moins rendre confus les futures utilisateurs de nos données, nous avons remplacé "null" par unknown, car un montatn a été payé et il est important de le prendre en compte mais meme si le moyen de paiement est inconnu il a bel et bien existé.
+
+
+- Pour que la couche Silver soit propre et exploitable, on a fait du nettoyage pour enlever les données qui n'ont pas de sens :
+
+On a supprimé les trajets avec une trip_distance <= 0 car ils sont surement des erreurs de saisie ou des trajets annulés, donc ça sert à rien de les garder dans nos calculs.
+
+On a aussi enlevé les trajets où le total_amount est à 0 ou en négatif. Comme c'est pas possible physiquement de payer un prix négatif, on a préféré nettoyer ça direct pour pas fausser les moyennes de rentabilité plus tard.
+En gros, on a voulu avoir une base saine dès le départ dans la Silver.

@@ -50,9 +50,11 @@ try:
 
     # 7. Jointure Dictionnaire (Correctif doublons)
     df_pay_type = df_dict.filter(F.col("category") == "payment_type").drop("year", "month", "day")
-    df_final = df_with_zones.join(df_pay_type, df_with_zones.payment_type == df_pay_type.code, "left") \
-                            .withColumnRenamed("description", "payment_method") \
-                            .drop("code", "category")
+    df_final = (df_with_zones
+            .join(df_pay_type, df_with_zones.payment_type == df_pay_type.code, "left")
+            .withColumnRenamed("description", "payment_method")
+            .fillna({"payment_method": "Unknown"}) # <--- Remplace null par "Unknown"
+            .drop("code", "category"))
 
     # 8. Action et Cache
     df_final.cache()
