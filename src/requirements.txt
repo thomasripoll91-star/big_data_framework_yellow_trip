@@ -1,0 +1,4 @@
+pyspark
+jupyterlab
+pandas
+pyarrow
